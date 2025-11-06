@@ -65,22 +65,35 @@ insertCoinButton.addEventListener('click', () => {
           result[2] = winningSymbol;
 
           // update visuals for the other reels
-          reelsArray[1].querySelector('.symbols').style.transform = `translateY(-${symbolList.indexOf(winningSymbol) * 90}px)`;
-          reelsArray[2].querySelector('.symbols').style.transform = `translateY(-${symbolList.indexOf(winningSymbol) * 90}px)`;
+          reelsArray[1].querySelector('.symbols').style.transform =
+            `translateY(-${symbolList.indexOf(winningSymbol) * 90}px)`;
+          reelsArray[2].querySelector('.symbols').style.transform =
+            `translateY(-${symbolList.indexOf(winningSymbol) * 90}px)`;
 
           spinCount = 0; // reset counter after guaranteed win
         }
 
+        // --- Check for win or loss ---
         if (result.every(s => s === result[0])) {
           const payout = payouts[result[0]];
           balance += payout;
           balanceDisplay.textContent = balance;
           message.textContent = `🎉 You got 3 ${result[0]}! You win $${payout}!`;
+
+          // Trigger jackpot lights if it's 3 stars
+          if (result[0] === '⭐') {
+            const machine = document.querySelector('.machine');
+            machine.classList.add('jackpot');
+
+            // Stop flashing after 5 seconds
+            setTimeout(() => {
+              machine.classList.remove('jackpot');
+            }, 5000);
+          }
         } else {
           message.textContent = "No match! Insert another $1 to try again.";
         }
       }
-
     }, 2000 + i * 500);
   });
 });

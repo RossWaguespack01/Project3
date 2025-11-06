@@ -133,3 +133,18 @@ body {
   border-radius: 0 0 8px 8px;
   box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
 }
+
+@keyframes jackpot-flash {
+  0%, 100% {
+    box-shadow: 0 0 30px 10px #ffff00, 0 0 60px 20px #ff0000;
+    background: linear-gradient(145deg, #ff0, #f00);
+  }
+  50% {
+    box-shadow: 0 0 50px 20px #00ffff, 0 0 80px 30px #ff00ff;
+    background: linear-gradient(145deg, #0ff, #f0f);
+  }
+}
+
+.machine.jackpot {
+  animation: jackpot-flash 0.3s alternate infinite;
+}
